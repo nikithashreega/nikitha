@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Play Store Analytics</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #222; color: white; }
+        .container { width: 90%; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .chart-container { padding: 20px; background-color: #333; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); }
+        h1 { color: #f39c12; }
+        h2 { color: #1abc9c; }
+    </style>
+</head>
+<body>
+    <h1>Google Play Store Reviews Analytics</h1>
+    <div class="container">
+        <div class="chart-container" id="wordcloud">
+            <h2>Word Cloud for 5-Star Reviews</h2>
+        </div>
+        <div class="chart-container" id="bar_chart">
+            <h2>Top 10 App Categories - Grouped Bar Chart</h2>
+        </div>
+        <div class="chart-container" id="choropleth_map">
+            <h2>Global Installs - Choropleth Map</h2>
+        </div>
+        <div class="chart-container" id="violin_plot">
+            <h2>Rating Distribution by Category - Violin Plot</h2>
+        </div>
+        <div class="chart-container" id="heatmap">
+            <h2>Correlation Matrix - Heatmap</h2>
+        </div>
+    </div>
+    <script>
+        function loadChart(divId, dataPath) {
+            fetch(dataPath)
+                .then(response => response.json())
+                .then(data => Plotly.newPlot(divId, data.data, data.layout))
+                .catch(error => console.error(`Error loading ${divId}:`, error));
+        }
+
+        loadChart('wordcloud', 'json_data/wordcloud.json');
+        loadChart('bar_chart', 'json_data/bar_chart.json');
+        loadChart('choropleth_map', 'json_data/choropleth_map.json');
+        loadChart('violin_plot', 'json_data/violin_plot.json');
+        loadChart('heatmap', 'json_data/heatmap.json');
+    </script>
+</body>
+</html>
